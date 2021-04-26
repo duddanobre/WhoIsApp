@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "145031685782",
+    "project_id": "whois-441c1",
+    "storage_bucket": "whois-441c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145031685782:android:540a4a9d582e9f13a484b7",
+        "android_client_info": {
+          "package_name": "com.whois"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145031685782-4s4ictu61k2ka9ev4rjejh538oshtkvb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3-20GnuCO42uFOGQjf_Iu-BIQIOBKwIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145031685782-4s4ictu61k2ka9ev4rjejh538oshtkvb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
