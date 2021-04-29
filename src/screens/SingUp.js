@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, Text, View, StyleSheet, Alert} from 'react-native';
-
+import firestore from '@react-native-firebase/firestore';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 
@@ -10,6 +10,9 @@ import FacebookLogin from '../components/FabebookLogin';
 
 export default function SingUp({navigation}) { 
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,6 +21,13 @@ export default function SingUp({navigation}) {
     auth()
     .createUserWithEmailAndPassword(email, password)
     .then(() => {
+      firestore().collection('users').doc(auth().currentUser.uid).
+      set({
+        firstName: firstName,
+        lastName: lastName,
+        age: age,
+        email: email,
+      })
       alert('Usuário criado!');
       navigation.navigate("Home");
      
@@ -45,10 +55,40 @@ export default function SingUp({navigation}) {
       <Text style={styles.text}>Crie uma conta</Text>
 
       <FormInput
+        labelValue={firstName}
+        onChangeText={(userFName) => setFirstName(userFName)}
+        placeholderText="Primeiro nome"
+        icon="user"
+        keyboardType="default"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
+      <FormInput
+        labelValue={lastName}
+        onChangeText={(userLName) => setLastName(userLName)}
+        placeholderText="Último nome"
+        icon="user"
+        keyboardType="default"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
+      <FormInput
+        labelValue={age}
+        onChangeText={(userAge) => setAge(userAge)}
+        placeholderText="Data de nascimento ex: dd/mm/yyyy"
+        icon="calendar"
+        keyboardType="default"
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+
+      <FormInput
         labelValue={email}
         onChangeText={(userEmail) => setEmail(userEmail)}
         placeholderText="Email"
-        icon="user"
+        icon="mail"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
@@ -75,27 +115,12 @@ export default function SingUp({navigation}) {
         onPress={() => handleRegister(email, password)}
       />
 
-      <View style={styles.textPrivate}>
-        <Text style={styles.color_textPrivate}>
-          By registering, you confirm that you accept our{' '}
-        </Text>
-        <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
-          <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
-            Terms of service
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.color_textPrivate}> and </Text>
-        <Text style={[styles.color_textPrivate, {color: '#e88832'}]}>
-          Privacy Policy
-        </Text>
-      </View>
-
-      {Platform.OS === 'android' ? (
+     {/* {Platform.OS === 'android' ? (
         <View>
           <FacebookLogin />
           
         </View>
-      ) : null}
+     ) : null} */}
 
       <TouchableOpacity
         style={styles.navButton}
@@ -113,13 +138,12 @@ export default function SingUp({navigation}) {
       flex: 1,
       justifyContent: 'center',
       padding: 20,
-   
     },
     text: {
       fontFamily: 'Lato-Regular',
       fontWeight: 'bold',
       fontSize: 28,
-      marginBottom: 10,
+      marginBottom: 20,
       color: '#051d5f',
     },
     navButton: {

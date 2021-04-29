@@ -6,10 +6,10 @@ import auth from '@react-native-firebase/auth';
 
 import Footer from '../components/footer';
 
-
 Icon.loadFont(); 
 
 export default function Home({navigation}) {
+
 
     return (
       <View>
