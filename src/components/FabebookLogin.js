@@ -1,11 +1,11 @@
 import React from 'react';
 import { View} from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { LoginManager, AccessToken} from 'react-native-fbsdk';
 
 import SocialButton from './SocialButton';
 
-export default function FacebookSignIn() {
+export default function FacebookSignIn({navigation}) {
 
    async function onFacebookButtonPress() {
      try {
@@ -39,11 +39,12 @@ export default function FacebookSignIn() {
   return (
     <View>
         <SocialButton 
-          btnType="facebook"
+          btnType="facebook-official"
           color="#4867aa"
-          buttonTitle= "Login com Facebook"
-          onPress={() => onFacebookButtonPress()}
+          buttonTitle= "Fazer login com Facebook"
+          onPress={() => onFacebookButtonPress().then(() => {navigation.navigate("Home")})}
         />
+
     </View>
   );
 }

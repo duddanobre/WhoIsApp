@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TouchableOpacity, Text, ScrollView, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, ScrollView, StyleSheet, View} from 'react-native';
 
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
@@ -7,6 +7,7 @@ import FormInput from '../components/FormInput';
 import auth from '@react-native-firebase/auth';
 
 import FacebookLogin from '../components/FabebookLogin';
+import GoogleLogin from '../components/GoogleLogin';
 
 export default function Login({navigation}) { 
 
@@ -69,7 +70,11 @@ export default function Login({navigation}) {
       </TouchableOpacity>
 
       {Platform.OS === 'android' ? (
-        <FacebookLogin />
+        <View>
+            <FacebookLogin />
+            <GoogleLogin />
+        </View>
+        
       ) : null}
 
       <TouchableOpacity
@@ -97,7 +102,7 @@ export default function Login({navigation}) {
       fontWeight: 'bold',
       fontSize: 28,
       marginBottom: 10,
-      color: '#051d5f',
+      color: '#78909c',
     },
     navButton: {
       marginTop: 15,
@@ -108,7 +113,7 @@ export default function Login({navigation}) {
     navButtonText: {
       fontSize: 18,
       fontWeight: '500',
-      color: '#2e64e5',
+      color: '#78909c',
       fontFamily: 'Lato-Regular',
     },
   }); 
