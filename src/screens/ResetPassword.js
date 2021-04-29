@@ -9,19 +9,11 @@ import auth from '@react-native-firebase/auth';
 export default function ResetPassword({navigation}) { 
 
   const [email, setEmail] = useState('');
-  const actionCodeSettings = {
-    url: 'https://whoisapp.com/resetPassword?mode=action&oobCode=code',
-    android: {
-      packageName: 'com.whois',
-      installApp: true,
-      minimumVersion: '12'
-    },
-    handleCodeInApp: true
-  };
+
 
   function handleResetPassword(email){
     auth()
-    .sendPasswordResetEmail(email, actionCodeSettings)
+    .sendPasswordResetEmail(email)
     .then(() => {
       alert('Email enviado');
       navigation.navigate("Login");
