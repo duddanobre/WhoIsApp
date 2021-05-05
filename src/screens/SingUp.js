@@ -6,8 +6,6 @@ import FormInput from '../components/FormInput';
 
 import auth from '@react-native-firebase/auth';
 
-import FacebookLogin from '../components/FabebookLogin';
-
 export default function SingUp({navigation}) { 
 
   const [firstName, setFirstName] = useState('');
