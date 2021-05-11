@@ -1,49 +1,21 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, Text, ScrollView, StyleSheet, View} from 'react-native';
-import { LoginManager, AccessToken} from 'react-native-fbsdk';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
-
 import auth from '@react-native-firebase/auth';
-import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
-import SocialButton from '../components/SocialButton';
+import FacebookButton from '../components/FacebookButton';
+import GoogleButton from '../components/GoogleButton';
 
 export default function Login({navigation}) { 
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  GoogleSignin.configure({
-    webClientId: "145031685782-4s4ictu61k2ka9ev4rjejh538oshtkvb.apps.googleusercontent.com",
-  });
-
-  async function onGoogleButtonPress() {
-    try{
-      //await GoogleSignin.hasPlayServices();
-    const { idToken } = await GoogleSignin.signIn();
-    
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-  
-    // Sign-in the user with the credential
-    await auth()
-    .signInWithCredential(googleCredential)
-    .then( () => { 
-      console.log("Sucesso!");
-      navigation.navigate("Home");
-    })
-    .catch(error => {
-      console.log('Something went wrong with sign up: ', error);
-    });
-    } catch(error) {
-      console.log({error});
-    }
-  }
   async function handleLogin(email, password){
     await auth()
     .signInWithEmailAndPassword(email, password)
     .then(() => {
-      console.log('signed in!');
+      console.log('signed in with email!');
       navigation.navigate("Home");
     })
     .catch(function(error) {
@@ -61,38 +33,7 @@ export default function Login({navigation}) {
     });
   }
 
-  async function onFacebookButtonPress() {
-    try {
-      
-       // Attempt login with permissions
-       const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']);
-     
-       if (result.isCancelled) {
-         throw 'User cancelled the login process';
-       }
-     
-       // Once signed in, get the users AccesToken
-       const data = await AccessToken.getCurrentAccessToken();
-     
-       if (!data) {
-         throw 'Something went wrong obtaining access token';
-       }
-     
-       // Create a Firebase credential with the AccessToken
-       const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-     
-       // Sign-in the user with the credential
-       return auth().signInWithCredential(facebookCredential)
-       .then(() => {
-         console.log("Sign Sucess!")
-         navigation.navigate("Home");
-        });
-    } catch (error) {
-      console.log(error);
-    }
-   };
-
-    return (
+  return (
 
     <ScrollView contentContainerStyle={styles.container}>
       
@@ -127,18 +68,8 @@ export default function Login({navigation}) {
 
       {Platform.OS === 'android' ? (
         <View>
-             <SocialButton 
-              btnType="facebook-official"
-              color="#4867aa"
-              buttonTitle= "Fazer login com Facebook"
-              onPress={() => onFacebookButtonPress()}
-            />
-            <GoogleSigninButton
-              style={{ width: 300 , height: 60, top: 15, left: 20}}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Light}
-              onPress={() => onGoogleButtonPress()}
-            />
+             <FacebookButton />
+             <GoogleButton />
         </View>
         
       ) : null}
@@ -158,20 +89,23 @@ export default function Login({navigation}) {
 
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'center',
-      padding: 20,
-   
+      
+      flexDirection: 'column',
+      justifyContent: 'center', 
+      alignItems: 'center',  
+      alignContent: 'space-between',
+      paddingHorizontal: 40                                  
     },
     text: {
       fontFamily: 'Lato-Regular',
       fontWeight: 'bold',
       fontSize: 28,
-      marginBottom: 10,
       color: '#78909c',
+      bottom: 10,
+      top: 30
     },
     navButton: {
-      marginTop: 15,
+      marginTop: 15,  
     },
     forgotButton: {
       marginVertical: 35,
@@ -182,4 +116,5 @@ export default function Login({navigation}) {
       color: '#78909c',
       fontFamily: 'Lato-Regular',
     },
+    
   }); 

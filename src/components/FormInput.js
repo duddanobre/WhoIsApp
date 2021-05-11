@@ -25,17 +25,15 @@ export default function FormInput(props){
 
 const styles = StyleSheet.create({
     inputContainer: {
-      marginTop: 5,
-      marginBottom: 10,
+      marginTop: 20,
+      marginBottom: 5,
       width: '100%',
       height: windowHeight / 15,
       borderColor: '#ccc',
       borderRadius: 3,
-      //borderWidth: 1,
       borderBottomWidth: 1,
-      flexDirection: 'row',
+      flexDirection:'row',
       alignItems: 'center',
-      //backgroundColor: '#fff',
       borderBottomColor: '#883997'
     },
     iconStyle: {
@@ -49,12 +47,12 @@ const styles = StyleSheet.create({
     },
     input: {
       padding: 10,
-      flex: 1,
       fontSize: 16,
       fontFamily: 'Lato-Regular',
       color: '#333',
       justifyContent: 'center',
       alignItems: 'center',
+      
     },
     inputField: {
       padding: 10,
