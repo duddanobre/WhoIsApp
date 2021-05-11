@@ -95,7 +95,7 @@ export default function SingUp({navigation}) {
       <FormInput
         labelValue={password}
         onChangeText={(userPassword) => setPassword(userPassword)}
-        placeholderText="Password"
+        placeholderText="Senha"
         icon="lock"
         secureTextEntry={true}
       />
@@ -103,7 +103,7 @@ export default function SingUp({navigation}) {
       <FormInput
         labelValue={confirmPassword}
         onChangeText={(userPassword) => setConfirmPassword(userPassword)}
-        placeholderText="Confirm Password"
+        placeholderText="Confirma sua senha"
         icon="lock"
         secureTextEntry={true}
       />
