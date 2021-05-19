@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import {Text, StyleSheet, ScrollView, View, TouchableOpacity} from 'react-native';
+import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert} from 'react-native';
 import { Card, ListItem, FAB, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
@@ -11,6 +11,7 @@ import FormButton from '../components/FormButton';
 
 export default function Home() {
 
+const [id, setId] = useState('');  
 const [agenda, setAgenda] = useState([]);
 const [loading, setLoading] = useState(true);
 const [userId, setUserId] = useState('');
@@ -19,6 +20,7 @@ const [atividade, setAtividade] = useState('');
 const [hora, setHora] = useState('');
 const [data, setData] = useState('');
 const [visible, setVisible] = useState(false);
+const [visibleE, setVisibleE] = useState(false);
 
 const getCurrentUser=()=>{
   firebase.auth().onAuthStateChanged((user) => {
@@ -53,6 +55,7 @@ const fetchAgenda = async () => {
             hora
           } = doc.data();
           list.push({
+            id: doc.id,
             userItem,
             atividade,
             data,
@@ -62,12 +65,11 @@ const fetchAgenda = async () => {
       });
 
     setAgenda(list);
-
+     
     if(loading){
       setLoading(false);
     }
 
-    //console.log(agenda);
   } catch (e) {
     console.log(e);
   }
@@ -76,6 +78,7 @@ const fetchAgenda = async () => {
 useEffect(() => {
   fetchAgenda(agenda);
 }, [agenda]);
+
 
 function addAgenda(){
   firestore()
@@ -91,6 +94,44 @@ function addAgenda(){
   });
 }
 
+async function editarAgenda(){
+  await firestore()
+  .collection('agenda')
+  .doc(id)
+  .update({
+      atividade: atividade,
+      data: data,
+      hora:hora
+  })
+  .then(() => {
+    alert("Agenda atualizada!");
+  });
+} 
+
+function deleteAgenda(){
+  Alert.alert(
+    "Deletar atividade",
+    "Deseja realmente deletar " + atividade + "?",
+    [
+        {
+            text: "Cancelar",
+            style: "cancel"
+        },
+        {
+            text: "OK",
+            onPress: () => {
+               firestore()
+                    .collection('agenda')
+                    .doc(id)
+                    .delete()
+                    .then(() => {
+                        alert('atividade removida');
+                    });
+            }
+        }
+    ]
+);
+}
  
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -122,23 +163,24 @@ function addAgenda(){
                   <Card.Title style={{
                      backgroundColor: '#7b1fa2', height: 80}}>
                   </Card.Title>
-                  {
-                    agenda.map((item, i) => (
-                      <ListItem key={i} bottomDivider>
+                  { 
+                    agenda.map((item) => (
+                      <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
                           <ListItem.Title style={{fontWeight: 'bold'}}>{item.atividade}</ListItem.Title>
                           <ListItem.Title>{item.data}</ListItem.Title>
                           <ListItem.Title>{item.hora}</ListItem.Title>
                         </ListItem.Content>
-                        <Icon name="edit" size={24}  />
-                        <Icon name="trash" size={24} />
+                        <Icon name="edit" size={24} onPress={() => {
+                          setVisibleE(!visibleE), setId(item.id), setAtividade(item.atividade), setHora(item.hora), setData(item.data)}}/>
+                        <Icon name="trash" size={24} onPress={() => {setId(item.id), setAtividade(item.atividade), deleteAgenda()}} />
                       </ListItem>
-                    ))
+                    )) 
                   }
                 </Card>
               <View>
                   <Overlay isVisible={visible} overlayStyle={{padding: 40, width: 350, height: 450}}>
-                    <Text style={styles.agendaText}> Cadastrar agenda </Text>
+                    <Text style={styles.agendaText}> Cadastrar atividade </Text>
                     <FormInput
                       labelValue={atividade}
                       onChangeText={(agendaItem) => setAtividade(agendaItem)}
@@ -179,7 +221,51 @@ function addAgenda(){
 
                   </Overlay>
               </View>
-        
+                
+        <View>
+            <Overlay isVisible={visibleE} overlayStyle={{padding: 40, width: 350, height: 450}}>
+            <Text style={styles.agendaText}> Editar atividade </Text>
+            <FormInput
+              labelValue={atividade}
+              onChangeText={(agendaItem) => setAtividade(agendaItem)}
+              placeholderText="Nome da atividade"
+              icon="rest"
+              keyboardType="default"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <FormInput
+              labelValue={hora}
+              onChangeText={(agendaHora) => setHora(agendaHora)}
+              placeholderText="Hora da atividade"
+              icon="clockcircleo"
+              keyboardType="default"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <FormInput
+              labelValue={data}
+              onChangeText={(agendaData) => setData(agendaData)}
+              placeholderText="Data da atividade"
+              icon="calendar"
+              keyboardType="default"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+
+              <FormButton
+                  buttonTitle="Editar"
+                  onPress={() => 
+                    {setVisibleE(!visibleE), editarAgenda();
+                  }}
+              />
+              <TouchableOpacity style={styles.buttonModal} onPress={() => setVisibleE(!visibleE)}>
+                <Text style={styles.buttonModalText}> Cancelar </Text>
+              </TouchableOpacity>
+
+          </Overlay>
+    </View>
+             
       </ScrollView>
 
     )
@@ -222,4 +308,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
 
   }
-})
+});
