@@ -4,10 +4,11 @@ import { Card, ListItem, FAB, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
 import { format } from 'date-fns';
-import { windowHeight } from '../components/dimentions/Dimentions';
+import { windowHeight, windowWidth } from '../components/dimentions/Dimentions';
 import firestore, {firebase} from '@react-native-firebase/firestore';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
+import RFButton from '../components/RecognizeButton';
 
 export default function Home() {
 
@@ -146,23 +147,19 @@ function deleteAgenda(){
              {getCurrentDate()} 
           </Text>
           </LinearGradient>
-              <View style={{top: 40, left: 115}}>
-                    <FAB color="#ae52d4"
-                    title="Adicionar"
-                      icon={
-                        <Icon
-                          name="plus"
-                          size={24}
-                          color="white"
-                        />
-                      } 
-                        onPress={() => setVisible(!visible)}
-                    />
-                </View>
                 <Card containerStyle={{padding: 0, marginTop: 40}} >
-                  <Card.Title style={{
-                     backgroundColor: '#7b1fa2', height: 80}}>
-                  </Card.Title>
+                  <View style={{
+                     backgroundColor: '#7b1fa2', height: 80}}>  
+                     <View>  
+                       <Icon
+                        style={{top: 20, left: 320}}
+                          name="plus-circle"
+                          size={40}
+                          color="white"
+                          onPress={() => setVisible(!visible)}
+                       />  
+                      </View>
+                  </View>
                   { 
                     agenda.map((item) => (
                       <ListItem key={item.id} bottomDivider>
@@ -264,9 +261,11 @@ function deleteAgenda(){
               </TouchableOpacity>
 
           </Overlay>
-    </View>
-             
+    </View>    
+
+      <RFButton />    
       </ScrollView>
+
 
     )
   
@@ -282,6 +281,8 @@ const styles = StyleSheet.create({
   },
   welcome:{
     padding: 30,
+    width: windowWidth,
+    height: windowHeight / 8
   },
   dataText:{
     color: '#fff',
@@ -307,5 +308,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Lato-Regular',
     fontWeight: 'bold'
 
-  }
+  },
 });

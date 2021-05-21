@@ -21,6 +21,7 @@
     "date-fns": "^2.21.3",
     "react": "16.13.1",
     "react-native": "^0.64.0",
+    "react-native-camera": "^3.43.9",
     "react-native-elements": "^3.4.1",
     "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "^1.10.2",
