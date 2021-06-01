@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from './screens/Login';
@@ -7,7 +6,7 @@ import Home from './screens/Home';
 import SingUp from './screens/SingUp';
 import ResetPassword from './screens/ResetPassword';
 import Logout from './components/Logout';
-import Icon from 'react-native-vector-icons/Feather';
+import Recognize from './components/Recognize';
 
 const AppDrawer = createDrawerNavigator();
 
@@ -31,6 +30,8 @@ const Router = () => {
                 <AppDrawer.Screen name = "SingUp" component={SingUp}
                  options={{swipeEnabled: false, headerShown: false}} />
                 <AppDrawer.Screen name = "ResetPassword" component={ResetPassword}
+                 options={{swipeEnabled: false, headerShown: false}} />
+                 <AppDrawer.Screen name = "Reconhecimento" component={Recognize}
                  options={{swipeEnabled: false, headerShown: false}} />
             </AppDrawer.Navigator>
         </NavigationContainer>

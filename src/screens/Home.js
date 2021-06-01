@@ -8,7 +8,8 @@ import { windowHeight, windowWidth } from '../components/dimentions/Dimentions';
 import firestore, {firebase} from '@react-native-firebase/firestore';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
-import RFButton from '../components/RecognizeButton';
+import RecognizeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
 
@@ -22,6 +23,8 @@ const [hora, setHora] = useState('');
 const [data, setData] = useState('');
 const [visible, setVisible] = useState(false);
 const [visibleE, setVisibleE] = useState(false);
+
+const navigation = useNavigation();
 
 const getCurrentUser=()=>{
   firebase.auth().onAuthStateChanged((user) => {
@@ -262,8 +265,18 @@ function deleteAgenda(){
 
           </Overlay>
     </View>    
+        
+          <View style={styles.buttonRecognize}>
+              <FAB color="#ae52d4"
+              icon={<RecognizeIcon
+              name="face-recognition"
+              size={24}
+              color="#fff" />}
+              onPress={() => {navigation.navigate("Reconhecimento")} }
+                  />
+           
+        </View>            
 
-      <RFButton />    
       </ScrollView>
 
 
@@ -307,6 +320,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Lato-Regular',
     fontWeight: 'bold'
-
   },
+  buttonRecognize:{
+    left: 150,
+    bottom: 10,
+    marginTop: 280,
+    height: windowHeight / 15,
+},
+recognize: {
+  top: 10
+},
 });
