@@ -24,6 +24,7 @@
     "react-native-camera": "^3.43.9",
     "react-native-elements": "^3.4.1",
     "react-native-fbsdk": "^3.0.0",
+    "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.10.2",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^1.7.0",
