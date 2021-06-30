@@ -1,35 +1,99 @@
-import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, Text} from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'
-
 import { RNCamera } from 'react-native-camera';
+import { useState } from 'react';
 
-export default class Recognize extends Component {
+import base64ToArrayBuffer from 'base64-arraybuffer';
 
-    constructor(props){
-        super(props);
-        this.state = {
-            visible: true,
-        }
-    }
+const locate = 'brazilsouth.api.cognitive.microsoft.com';
+const key = '686e7be902614784b48888e18de75f1e';
 
-   async takePicture(){
-            if (this.camera) {
-                const options = { quality: 0.5, base64: true, pauseAfterCapture: true};
-                const data = await this.camera.takePictureAsync(options);
+const base_instance_options = {
+  baseURL: `https://${locate}/face/v1.0`,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Ocp-Apim-Subscription-Key': key
+  }
+};
+
+export default function Recognize({ navigation }){
+    
+const [userId, setUserId] = useState('');
+const [nome, setNome] = useState('');
+const [showCamera, setShowCamera] = useState(false);
+
+
+const enterRoom = (value) => {
+    
+      setUserId(RandomId(15)),
+      setNome(value),
+      setShowCamera(true)
+  }
+
+  async function takePicture(){
+        camera.capture()
+            if (camera) {
+                const options = { quality: 0.5, base64: true};
+                const data = await camera.takePictureAsync(options);
+                const img = base64ToArrayBuffer.decode(data.base64)
                 console.log(data.uri);
                 
-            }
-    }; 
-
-    
-        render(){
+                try {
+                    const facedetect = { ...base_instance_options };
+                    facedetect.headers['Content-Type'] = 'application/octet-stream';
+                    const facedetect_instance = axios.create(facedetect);
+            
+                    const facedetect_res = await facedetect_instance.post(
+                      `/detect?returnFaceId=true&detectionModel=detection_02`,
+                      img
+                    );
+            
+                    console.log("face detect res: ", facedetect_res.data);
+            
+                    if (facedetect_res.data.length) {
+            
+                      const findSimilars = { ...base_instance_options };
+                      findSimilars.headers['Content-Type'] = 'application/json';
+                      const findsimilars_instance = axios.create(findSimilars);
+                      const findsimilars_res = await findsimilars_instance.post(
+                        `/findsimilars`,
+                        {
+                          faceId: facedetect_res.data[0].faceId,
+                          faceListId: 'wern-faces-01',
+                          maxNumOfCandidatesReturned: 2,
+                          mode: 'matchPerson'
+                        }
+                      );
+            
+                      console.log("find similars res: ", findsimilars_res.data);
+            
+                      if (findsimilars_res.data.length) {
+            
+                        Alert.alert("Found match!", "You've successfully attended!");
+                        this.attend();
+            
+                      } else {
+                        Alert.alert("No match found", "Sorry, you are not registered");
+                      }
+            
+                    } else {
+                      Alert.alert("error", "Cannot find any face. Please make sure there is sufficient light when taking a selfie");
+                    }
+            
+                  } catch (err) {
+                    console.log("err: ", err);
+                  }
+                }
+            }      
+        
         return (
             <View style={styles.container}>
                 <RNCamera
                     ref={ref => {
-                        this.camera = ref;
+                        camera = ref;
                     }}
                     style={styles.preview}
                     type={RNCamera.Constants.Type.back}
@@ -49,12 +113,11 @@ export default class Recognize extends Component {
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {this.takePicture()}}
+                        onPress={() => {takePicture(), navigation.navigate.goBack()}}
                     />
                 </View>
             </View>
-        );     
-    }
+        );      
 };  
 
 

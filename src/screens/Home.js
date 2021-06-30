@@ -273,7 +273,7 @@ function deleteAgenda(){
               size={24}
               color="#fff" />}
               onPress={() => {navigation.navigate("Reconhecimento")} }
-                  />
+              />
            
         </View>            
 
