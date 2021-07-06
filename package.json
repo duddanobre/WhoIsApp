@@ -18,6 +18,8 @@
     "@react-navigation/drawer": "^5.12.4",
     "@react-navigation/native": "^5.9.3",
     "@react-navigation/stack": "^5.14.3",
+    "base64-arraybuffer": "^0.2.0",
+    "browserslist": "^4.16.6",
     "date-fns": "^2.21.3",
     "react": "16.13.1",
     "react-native": "^0.64.0",

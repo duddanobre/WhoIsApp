@@ -1,9 +1,7 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'
 import { RNCamera } from 'react-native-camera';
-import { useState } from 'react';
 
 import base64ToArrayBuffer from 'base64-arraybuffer';
 
