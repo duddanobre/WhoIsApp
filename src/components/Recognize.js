@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'
 import { RNCamera } from 'react-native-camera';
-
+import axios from 'axios';
 import base64ToArrayBuffer from 'base64-arraybuffer';
 
 const locate = 'brazilsouth.api.cognitive.microsoft.com';
@@ -18,7 +18,7 @@ const base_instance_options = {
 };
 
 export default function Recognize({ navigation }){
-    
+let camera;  
 const [userId, setUserId] = useState('');
 const [nome, setNome] = useState('');
 const [showCamera, setShowCamera] = useState(false);
@@ -32,7 +32,7 @@ const enterRoom = (value) => {
   }
 
   async function takePicture(){
-        camera.capture()
+       // camera.capture()
             if (camera) {
                 const options = { quality: 0.5, base64: true};
                 const data = await camera.takePictureAsync(options);
@@ -111,7 +111,7 @@ const enterRoom = (value) => {
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {takePicture(), navigation.navigate.goBack()}}
+                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação")}}
                     />
                 </View>
             </View>
