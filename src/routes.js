@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from './screens/Login';
 import Home from './screens/Home';
 import SingUp from './screens/SingUp';
+import Face from './screens/Face';
 import ResetPassword from './screens/ResetPassword';
 import Logout from './components/Logout';
 import Recognize from './components/Recognize';
@@ -27,6 +28,8 @@ const Router = () => {
                         )
                     }}
                />
+               <AppDrawer.Screen name = "Idenfiticação" component={Face}
+                 options={{swipeEnabled: false}} />
                 <AppDrawer.Screen name = "SingUp" component={SingUp}
                  options={{swipeEnabled: false, headerShown: false}} />
                 <AppDrawer.Screen name = "ResetPassword" component={ResetPassword}
