@@ -5,8 +5,8 @@ import { RNCamera } from 'react-native-camera';
 import axios from 'axios';
 import base64ToArrayBuffer from 'base64-arraybuffer';
 
-const locate = 'brazilsouth.api.cognitive.microsoft.com';
-const key = '686e7be902614784b48888e18de75f1e';
+const locate = 'southcentralus.api.cognitive.microsoft.com';
+const key = '4babdbede4bc4fb59ce92d5b9f2fe1ae';
 
 const base_instance_options = {
   baseURL: `https://${locate}/face/v1.0`,
@@ -19,24 +19,14 @@ const base_instance_options = {
 
 export default function Recognize({ navigation }){
 let camera;  
-const [userId, setUserId] = useState('');
-const [nome, setNome] = useState('');
-const [showCamera, setShowCamera] = useState(false);
-
-
-const enterRoom = (value) => {
-    
-      setUserId(RandomId(15)),
-      setNome(value),
-      setShowCamera(true)
-  }
-
+const [response, setResponse] = useState({});
   async function takePicture(){
        // camera.capture()
             if (camera) {
                 const options = { quality: 0.5, base64: true};
                 const data = await camera.takePictureAsync(options);
                 const img = base64ToArrayBuffer.decode(data.base64)
+                //const url = "https://claudia.abril.com.br/wp-content/uploads/2019/02/ana-hickmann-00.jpg";
                 console.log(data.uri);
                 
                 try {
@@ -45,7 +35,7 @@ const enterRoom = (value) => {
                     const facedetect_instance = axios.create(facedetect);
             
                     const facedetect_res = await facedetect_instance.post(
-                      `/detect?returnFaceId=true&detectionModel=detection_02`,
+                      '/detect?returnFaceId=true&recognitionModel=recognition_03&detectionModel=detection_02',
                       img
                     );
             
@@ -60,25 +50,24 @@ const enterRoom = (value) => {
                         `/findsimilars`,
                         {
                           faceId: facedetect_res.data[0].faceId,
-                          faceListId: 'wern-faces-01',
+                          faceListId: 'whois-3e-facelist',
                           maxNumOfCandidatesReturned: 2,
                           mode: 'matchPerson'
                         }
                       );
-            
-                      console.log("find similars res: ", findsimilars_res.data);
-            
+                      
+                      console.log("Response: ", findsimilars_res.data);
+                      setResponse(findsimilars_res.data);
                       if (findsimilars_res.data.length) {
             
-                        Alert.alert("Found match!", "You've successfully attended!");
-                        this.attend();
+                        console.log(findsimilars_res.data);
             
                       } else {
-                        Alert.alert("No match found", "Sorry, you are not registered");
+                        console.log("No match found");
                       }
             
                     } else {
-                      Alert.alert("error", "Cannot find any face. Please make sure there is sufficient light when taking a selfie");
+                      console.log("error", "Cannot find any face. Please make sure there is sufficient light when taking a selfie");
                     }
             
                   } catch (err) {
@@ -93,6 +82,7 @@ const enterRoom = (value) => {
                     ref={ref => {
                         camera = ref;
                     }}
+                   // captureTarget
                     style={styles.preview}
                     type={RNCamera.Constants.Type.back}
                     autoFocus={RNCamera.Constants.AutoFocus.on}
@@ -104,14 +94,13 @@ const enterRoom = (value) => {
                         buttonPositive: 'Ok',
                         buttonNegative: 'Cancelar',
                     }}
-                    playSoundOnCapture={true}
                     />
                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
                     <Icon
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação")}}
+                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação", {param: response})}}
                     />
                 </View>
             </View>
