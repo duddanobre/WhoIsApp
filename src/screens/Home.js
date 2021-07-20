@@ -152,7 +152,8 @@ function deleteAgenda(){
           </LinearGradient>
                 <Card containerStyle={{padding: 0, marginTop: 40}} >
                   <View style={{
-                     backgroundColor: '#7b1fa2', height: 80}}>  
+                     backgroundColor: '#7b1fa2', height: 80}}
+                  >  
                      <View>  
                        <Icon
                         style={{top: 20, left: 320}}
