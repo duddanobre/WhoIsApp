@@ -1,18 +1,21 @@
 import React from 'react';
+import { Text } from 'react-native';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import { Card } from 'react-native-elements';
 import { windowHeight, windowWidth } from '../components/dimentions/Dimentions';
 
 
-export default function Home() {
+export default function Identificação({route, navigation}) {
 
+const {paramResponse} = route.params;
+console.log(paramResponse);
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
                 <Card containerStyle={{padding: 0, marginTop: 40}} >
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
-                     
                   </View>
+                  <Text>Param: {JSON.stringify(paramResponse)}</Text>
                 </Card>
               
              </ScrollView>

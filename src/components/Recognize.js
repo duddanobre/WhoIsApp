@@ -26,7 +26,6 @@ const [response, setResponse] = useState({});
                 const options = { quality: 0.5, base64: true};
                 const data = await camera.takePictureAsync(options);
                 const img = base64ToArrayBuffer.decode(data.base64)
-                //const url = "https://claudia.abril.com.br/wp-content/uploads/2019/02/ana-hickmann-00.jpg";
                 console.log(data.uri);
                 
                 try {
@@ -100,7 +99,7 @@ const [response, setResponse] = useState({});
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação", {param: response})}}
+                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação", {paramResponse: response})}}
                     />
                 </View>
             </View>
