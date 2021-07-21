@@ -19,7 +19,7 @@ const base_instance_options = {
 
 export default function Recognize({ navigation }){
 let camera;  
-const [response, setResponse] = useState({});
+const [response, setResponse] = useState('');
   async function takePicture(){
        // camera.capture()
             if (camera) {
@@ -55,22 +55,22 @@ const [response, setResponse] = useState({});
                         }
                       );
                       
-                      console.log("Response: ", findsimilars_res.data);
-                      setResponse(findsimilars_res.data);
                       if (findsimilars_res.data.length) {
-            
-                        console.log(findsimilars_res.data);
+                        console.log("Response: ", findsimilars_res.data[1].persistedFaceId);
+                        setResponse(findsimilars_res.data[1].persistedFaceId);
+                        if(findsimilars_res.data[0].confidence >= 0.7)
+                        navigation.navigate("Idenfiticação", {paramResponse: response})
             
                       } else {
-                        console.log("No match found");
+                        alert("No match found");
                       }
             
                     } else {
-                      console.log("error", "Cannot find any face. Please make sure there is sufficient light when taking a selfie");
+                      alert("Nenhuma face detectada. Por favor, verifique se há luz suficiente ao tirar uma foto.");
                     }
             
                   } catch (err) {
-                    console.log("err: ", err);
+                    console.log("erro: ", err);
                   }
                 }
             }      
@@ -99,7 +99,7 @@ const [response, setResponse] = useState({});
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {takePicture(), navigation.navigate("Idenfiticação", {paramResponse: response})}}
+                        onPress={() => {takePicture()}}
                     />
                 </View>
             </View>
