@@ -70,7 +70,7 @@ const [response, setResponse] = useState('');
                     }
             
                   } catch (err) {
-                    console.log("erro: ", err);
+                    alert("erro: ", err);
                   }
                 }
             }      
