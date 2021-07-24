@@ -69,19 +69,14 @@ export default function Identificação({route, navigation}) {
     fetchAlbum(album);
   }, [album]);
 
-  album.map((item) => {
-    if(paramResponse === item.persistedFaceId) 
-    
-    return  
-    <ListItem key={item.id} bottomDivider>
-      <ListItem.Content>
-        <ListItem.Title style={{fontWeight: 'bold'}}>Nome: {item.nome}</ListItem.Title>
-        <ListItem.Title>Parentesco: {item.parentesco}</ListItem.Title>
-        <ListItem.Title>Aniversário: {item.aniversario}</ListItem.Title>
-        <ListItem.Title>face: {item.persistedFaceId}</ListItem.Title>
-      </ListItem.Content>
-    </ListItem> 
-  })
+  function isTrue(){
+    album.map((i) => {
+      if(i.persistedFaceId === paramResponse)
+        setVisible(true)
+    })
+    return visible;
+  }
+
 
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -89,8 +84,20 @@ export default function Identificação({route, navigation}) {
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
                   </View>
-                 
-                  <Text>Param: {paramResponse}</Text>
+                  {isTrue ?
+                    album.map((item) => (
+                      <ListItem key={item.id} bottomDivider>
+                        <ListItem.Content>
+                          <Text style={{fontSize: 14}}>Nome: <ListItem.Title style={{fontSize: 14}}>{item.nome}</ListItem.Title></Text>
+                          <Text style={{fontSize: 14}}>Aniversário: <ListItem.Title style={{fontSize: 14}}>{item.aniversario}</ListItem.Title></Text>
+                          <Text style={{fontSize: 14}}>O que essa pessoa é minha? 
+                            <ListItem.Title style={{fontWeight: 'bold', fontSize: 14}}> {item.parentesco}</ListItem.Title>
+                          </Text>
+                        </ListItem.Content>
+                      </ListItem>
+                    )) 
+                    : <Text>Não há dados</Text>
+                  }
                 </Card>
               
              </ScrollView>
