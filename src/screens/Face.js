@@ -70,11 +70,20 @@ export default function Identificação({route, navigation}) {
   }, [album]);
 
   function isTrue(){
-    album.map((i) => {
-      if(i.persistedFaceId === paramResponse)
-        setVisible(true)
-    })
-    return visible;
+    const r = Object.values(paramResponse)
+    const x = r.map(i => i.persistedFaceId);
+   
+     album.forEach(element => {
+       if(element.persistedFaceId === x.shift()){
+       // console.log("verdade")
+        return true;
+       }else{
+        // console.log("mentira")
+         return false;
+       }
+       
+     });
+    
   }
 
 
@@ -84,7 +93,7 @@ export default function Identificação({route, navigation}) {
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
                   </View>
-                  {isTrue ?
+                  {isTrue() ?
                     album.map((item) => (
                       <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
@@ -93,11 +102,13 @@ export default function Identificação({route, navigation}) {
                           <Text style={{fontSize: 14}}>O que essa pessoa é minha? 
                             <ListItem.Title style={{fontWeight: 'bold', fontSize: 14}}> {item.parentesco}</ListItem.Title>
                           </Text>
+                          <Text>{item.persistedFaceId}</Text>
                         </ListItem.Content>
                       </ListItem>
                     )) 
                     : <Text>Não há dados</Text>
                   }
+                  <Text>{JSON.stringify(paramResponse)}</Text>
                 </Card>
               
              </ScrollView>
