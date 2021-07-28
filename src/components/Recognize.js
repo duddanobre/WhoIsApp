@@ -19,7 +19,7 @@ const base_instance_options = {
 
 export default function Recognize({ navigation }){
 let camera;  
-const [response, setResponse] = useState('');
+const [response, setResponse] = useState([]);
   async function takePicture(){
        // camera.capture()
             if (camera) {
@@ -50,27 +50,28 @@ const [response, setResponse] = useState('');
                         {
                           faceId: facedetect_res.data[0].faceId,
                           faceListId: 'whois-3e-facelist',
-                          maxNumOfCandidatesReturned: 2,
+                          //maxNumOfCandidatesReturned: 1,
                           mode: 'matchPerson'
                         }
                       );
                       
                       if (findsimilars_res.data.length) {
-                        console.log("Response: ", findsimilars_res.data[1].persistedFaceId);
-                        setResponse(findsimilars_res.data[1].persistedFaceId);
-                        if(findsimilars_res.data[0].confidence >= 0.7)
+                        console.log("Response: ", findsimilars_res.data, response);
+                        setResponse(findsimilars_res.data);
+                        // if(findsimilars_res.data[0].confidence >= 0.6)
                         navigation.navigate("Idenfiticação", {paramResponse: response})
             
-                      } else {
+                      }else {
                         alert("No match found");
                       }
             
-                    } else {
+                    }else {
                       alert("Nenhuma face detectada. Por favor, verifique se há luz suficiente ao tirar uma foto.");
                     }
             
-                  } catch (err) {
-                    alert("erro: ", err);
+                }catch (err) {
+                    alert('Ocorreu um erro. Tente novamente.')
+                    console.log("erro: ", err);
                   }
                 }
             }      
