@@ -72,20 +72,19 @@ export default function Identificação({route, navigation}) {
   function isTrue(){
     const r = Object.values(paramResponse)
     const x = r.map(i => i.persistedFaceId);
-   
-     album.forEach(element => {
-       if(element.persistedFaceId === x.shift()){
-       // console.log("verdade")
-        return true;
-       }else{
-        // console.log("mentira")
-         return false;
-       }
-       
-     });
     
+      album.forEach(element => {
+        if(element.persistedFaceId == x.shift()){
+          setVisible(true);
+        }else{
+          setVisible(false);
+        }
+      }); 
+  return visible;  
   }
-
+  useEffect(() => {
+    isTrue()
+  }, [album, paramResponse])
 
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -93,7 +92,7 @@ export default function Identificação({route, navigation}) {
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
                   </View>
-                  {isTrue() ?
+                  {visible ?
                     album.map((item) => (
                       <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
