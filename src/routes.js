@@ -8,6 +8,7 @@ import Face from './screens/Face';
 import ResetPassword from './screens/ResetPassword';
 import Logout from './components/Logout';
 import Recognize from './components/Recognize';
+import Album from './screens/Album';
 
 const AppDrawer = createDrawerNavigator();
 
@@ -28,6 +29,8 @@ const Router = () => {
                         )
                     }}
                />
+               <AppDrawer.Screen name = "Album" component={Album}
+                 options={{swipeEnabled: false}} />
                <AppDrawer.Screen name = "Idenfiticação" component={Face}
                  options={{swipeEnabled: false}} />
                 <AppDrawer.Screen name = "SingUp" component={SingUp}
