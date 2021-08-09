@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
-import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert} from 'react-native';
-import { Card, ListItem, FAB, Overlay} from 'react-native-elements';
+import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert, Animated} from 'react-native';
+import { Card, ListItem, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
 import Icone from 'react-native-vector-icons/Ionicons';
@@ -139,6 +139,15 @@ function deleteAgenda(){
     ]
 );
 }
+
+const Animation = useRef(new Animated.Value(0)) 
+useEffect(() => {
+  Animated.timing(
+    Animation,{
+      useNativeDriver: true
+    }
+  ).start();
+}, [Animation])
  
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -273,7 +282,7 @@ function deleteAgenda(){
           <View style={styles.buttonRecognize}>
           </View>
           <ActionButton buttonColor="#ae52d4">
-            <ActionButton.Item buttonColor='#ffe100' title="Album" onPress={() => console.log("notes tapped!")}>
+            <ActionButton.Item buttonColor='#ffe100' title="Album" onPress={() => {navigation.navigate("Album")}}>
               <Icone name="image" style={styles.actionButtonIcon} />
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}}>
