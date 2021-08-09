@@ -3,6 +3,7 @@ import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert} from 'react
 import { Card, ListItem, FAB, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
+import Icone from 'react-native-vector-icons/Ionicons';
 import { format } from 'date-fns';
 import { windowHeight, windowWidth } from '../components/dimentions/Dimentions';
 import firestore, {firebase} from '@react-native-firebase/firestore';
@@ -10,6 +11,8 @@ import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import RecognizeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import ActionButton from 'react-native-action-button';
+//import ImagePicker from 'react-native-image-crop-picker';
 
 export default function Home() {
 
@@ -268,16 +271,15 @@ function deleteAgenda(){
     </View>    
         
           <View style={styles.buttonRecognize}>
-              <FAB color="#ae52d4"
-              icon={<RecognizeIcon
-              name="face-recognition"
-              size={24}
-              color="#fff" />}
-              onPress={() => {navigation.navigate("Reconhecimento")} }
-              />
-           
-        </View>            
-
+          </View>
+          <ActionButton buttonColor="#ae52d4">
+            <ActionButton.Item buttonColor='#ffe100' title="Album" onPress={() => console.log("notes tapped!")}>
+              <Icone name="image" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+            <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}}>
+              <RecognizeIcon name="face-recognition" style={styles.actionButtonIcon} />
+            </ActionButton.Item>
+        </ActionButton>
       </ScrollView>
 
 
@@ -331,4 +333,9 @@ const styles = StyleSheet.create({
 recognize: {
   top: 10
 },
+actionButtonIcon:{
+  fontSize: 20,
+  height: 22,
+  color: 'white',
+}
 });
