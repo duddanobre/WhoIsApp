@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Login from './screens/Login';
@@ -9,10 +9,23 @@ import ResetPassword from './screens/ResetPassword';
 import Logout from './components/Logout';
 import Recognize from './components/Recognize';
 import Album from './screens/Album';
+import {BackHandler, Alert} from 'react-native';
 
 const AppDrawer = createDrawerNavigator();
 
 const Router = () => {
+
+    const backAction = () => {
+        return true;
+      };
+
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+    
+        return () =>
+          BackHandler.removeEventListener("hardwareBackPress", backAction);
+      }, []);
+
     return (
         <NavigationContainer>
             <AppDrawer.Navigator initialRouteName="Login"
