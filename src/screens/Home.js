@@ -1,5 +1,5 @@
-import React, { useState, useEffect} from 'react';
-import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert, Animated} from 'react-native';
+import React, { useState, useEffect, useRef} from 'react';
+import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert, LogBox} from 'react-native';
 import { Card, ListItem, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
@@ -12,7 +12,6 @@ import FormButton from '../components/FormButton';
 import RecognizeIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import ActionButton from 'react-native-action-button';
-//import ImagePicker from 'react-native-image-crop-picker';
 
 export default function Home() {
 
@@ -140,14 +139,9 @@ function deleteAgenda(){
 );
 }
 
-const Animation = useRef(new Animated.Value(0)) 
 useEffect(() => {
-  Animated.timing(
-    Animation,{
-      useNativeDriver: true
-    }
-  ).start();
-}, [Animation])
+  LogBox.ignoreLogs(['Animated: `useNativeDriver`']);
+}, []);
  
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -282,7 +276,7 @@ useEffect(() => {
           <View style={styles.buttonRecognize}>
           </View>
           <ActionButton buttonColor="#ae52d4">
-            <ActionButton.Item buttonColor='#ffe100' title="Album" onPress={() => {navigation.navigate("Album")}}>
+            <ActionButton.Item buttonColor='#ffd500' title="Album" onPress={() => {navigation.navigate("Album")}}>
               <Icone name="image" style={styles.actionButtonIcon} />
             </ActionButton.Item>
             <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}}>

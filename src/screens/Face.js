@@ -14,10 +14,6 @@ export default function Identificação({route, navigation}) {
   const [album, setAlbum] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
-  const [aniversario, setAniversario] = useState('');
-  const [nome, setNome] = useState('');
-  const [parentesco, setParentesco] = useState('');
-  const [persistedFaceId, setPersistedFaceId] = useState('');
   const [visible, setVisible] = useState(false);
 
     firebase.auth().onAuthStateChanged((user) => {
