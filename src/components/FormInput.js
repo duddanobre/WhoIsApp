@@ -8,7 +8,7 @@ export default function FormInput(props){
         return(
             <View style={styles.inputContainer}>
                 <View style={styles.iconStyle}>
-                    <AntDesign name={props.icon} size={25} color="#883997" />
+                    <AntDesign name={props.icon} size={20} color="#883997" />
                 </View>
                 <TextInput
                     value={props.labelValue}
@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
       marginTop: 20,
       marginBottom: 5,
       width: '100%',
-      height: windowHeight / 15,
+      height: windowHeight / 20,
       borderColor: '#ccc',
-      borderRadius: 3,
+      borderRadius: 6,
       borderBottomWidth: 1,
       flexDirection:'row',
       alignItems: 'center',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     },
     input: {
       padding: 10,
-      fontSize: 16,
+      fontSize: 15,
       fontFamily: 'Lato-Regular',
       color: '#333',
       justifyContent: 'center',
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
       marginTop: 5,
       marginBottom: 10,
       width: windowWidth / 1.5,
-      height: windowHeight / 15,
-      fontSize: 16,
+      height: windowHeight / 20,
+      fontSize: 15,
       borderRadius: 8,
       borderWidth: 1,
     },
