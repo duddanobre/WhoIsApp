@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'
 import { RNCamera } from 'react-native-camera';
 import axios from 'axios';
@@ -78,6 +78,13 @@ const [response, setResponse] = useState([]);
         
         return (
             <View style={styles.container}>
+               <Icon
+                    name="x-square"
+                    size={35}
+                    color="#ddd"
+                    style={styles.close}
+                    onPress={() => {navigation.goBack()}}
+                      />
                 <RNCamera
                     ref={ref => {
                         camera = ref;
@@ -95,12 +102,12 @@ const [response, setResponse] = useState([]);
                         buttonNegative: 'Cancelar',
                     }}
                     />
-                <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+                <View style={{ flex: 0, flexDirection: 'column', justifyContent: 'center' }}>
                     <Icon
                         name="camera"
                         size={35}
                         style={styles.capture}
-                        onPress={() => {takePicture()}}
+                        onPress={() => {takePicture(), Alert.alert('Imagem capturada, aguarde...')}}
                     />
                 </View>
             </View>
@@ -127,5 +134,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         alignSelf: 'center',
         margin: 20,
+      },
+      close: {
+        borderRadius: 5,
+        left: 360        
       },
 });
