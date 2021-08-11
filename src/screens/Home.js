@@ -96,7 +96,11 @@ function addAgenda(){
     hora: hora
   })
   .then(() => {
-    alert('Atividade adicionada!');
+    Alert.alert('Atividade adicionada!');
+    setAtividade(''), setData(''), setHora('');
+  })
+  .catch((error) => {
+    Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
   });
 }
 
@@ -110,7 +114,11 @@ async function editarAgenda(){
       hora:hora
   })
   .then(() => {
-    alert("Agenda atualizada!");
+    Alert.alert("Agenda atualizada!");
+    setAtividade(''), setData(''), setHora('');
+  })
+  .catch((error) => {
+    Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
   });
 } 
 
@@ -132,6 +140,9 @@ function deleteAgenda(){
                     .delete()
                     .then(() => {
                         alert('atividade removida');
+                    })
+                    .catch((error) => {
+                      Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
                     });
             }
         }
@@ -316,14 +327,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     marginTop: 10,
     width: '100%',
-    height: windowHeight / 15,
+    height: windowHeight / 20,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
   },
   buttonModalText:{
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Lato-Regular',
     fontWeight: 'bold'
   },
