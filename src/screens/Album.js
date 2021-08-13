@@ -7,8 +7,20 @@ import firestore, {firebase} from '@react-native-firebase/firestore';
 import FormInput from '../components/FormInput';
 import ImagePicker from 'react-native-image-crop-picker';
 import FormButton from '../components/FormButton';
-
+import axios from 'axios';
 import storage from '@react-native-firebase/storage';
+
+const locate = 'southcentralus.api.cognitive.microsoft.com';
+const key = '4babdbede4bc4fb59ce92d5b9f2fe1ae';
+
+const base_instance_options = {
+  baseURL: `https://${locate}/face/v1.0`,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Ocp-Apim-Subscription-Key': key
+  }
+};
 
 export default function Identificação({navigation}) {
 
@@ -83,26 +95,25 @@ export default function Identificação({navigation}) {
   };
 
   const addFace = async () => {
-    const imageUrl = await uploadImage();
-    console.log('Image Url: ', imageUrl);
-
+    const faceId = await faceAddAPI();
+  
     firestore()
-    .collection('album')
-    .add({
-      userItem: userId,
-      nome: nome,
-      aniversario: aniversario,
-      persistedFaceId: persistedFaceId,
-      parentesco: parentesco
-    })
-    .then(() => {
-      console.log('People added');
-      Alert.alert('Pessoa cadastrada com sucesso!');
-      setNome(''), setParentesco(''), setAniversario(''), setImage(null);
-    })
-    .catch((error) => {
-      Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
-    });
+        .collection('album')
+        .add({
+          userItem: userId,
+          nome: nome,
+          aniversario: aniversario,
+          persistedFaceId: faceId,
+          parentesco: parentesco
+        })
+        .then(() => {
+          console.log('People added', persistedFaceId, faceId);
+          Alert.alert('Pessoa cadastrada com sucesso!');
+          setNome(''), setParentesco(''), setAniversario(''), setImage(null);
+        })
+        .catch((error) => {
+          Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
+        }); 
   }
 
   const uploadImage = async () => {
@@ -150,6 +161,25 @@ export default function Identificação({navigation}) {
     }
 
   };
+
+  async function faceAddAPI(){
+    const imageUrl = await uploadImage();
+    console.log('Image Url: ', imageUrl);
+    try {
+      const addFaces = { ...base_instance_options };
+      addFaces.headers['Content-Type'] = 'application/json';
+      const addFaces_instance = axios.create(addFaces);
+      const addFaces_res = await addFaces_instance.post(
+      `/facelists/whois-3e-facelist/persistedFaces`,
+        {url: imageUrl}
+      );
+      console.log("face added:", addFaces_res.data.persistedFaceId);
+      //setPersistedFaceId(addFaces_res.data.persistedFaceId);
+      return addFaces_res.data.persistedFaceId;
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
