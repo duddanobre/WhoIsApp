@@ -65,7 +65,7 @@ export default function Identificação({route, navigation}) {
     fetchAlbum(album);
   }, [album]);
 
-  function isTrue(){
+ function isTrue(){
     const r = Object.values(paramResponse)
     const x = r.map(i => i.persistedFaceId);
     
@@ -88,7 +88,7 @@ export default function Identificação({route, navigation}) {
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
                   </View>
-                  {visible ?
+                  {visible == true?
                     album.map((item) => (
                       <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
