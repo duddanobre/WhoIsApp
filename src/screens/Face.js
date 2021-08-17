@@ -4,17 +4,17 @@ import {StyleSheet, ScrollView, View} from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
 import { windowHeight, windowWidth } from '../components/dimentions/Dimentions';
 import firestore, {firebase} from '@react-native-firebase/firestore';
-
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function Identificação({route, navigation}) {
  
   const {paramResponse} = route.params;
 
-  const [id, setId] = useState('');  
   const [album, setAlbum] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
-  const [visible, setVisible] = useState(false);
+  const r = Object.values(paramResponse)
+  const x = r.map(i => i.persistedFaceId);
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -28,7 +28,7 @@ export default function Identificação({route, navigation}) {
   
       await firestore()
         .collection('album')
-        .where('userItem', '==', userId)
+        .where('persistedFaceId', '==', x[0])
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -65,31 +65,23 @@ export default function Identificação({route, navigation}) {
     fetchAlbum(album);
   }, [album]);
 
- function isTrue(){
-    const r = Object.values(paramResponse)
-    const x = r.map(i => i.persistedFaceId);
-    
-      album.forEach(element => {
-        if(element.persistedFaceId == x.shift()){
-          setVisible(true);
-        }else{
-          setVisible(false);
-        }
-      }); 
-  return visible;  
-  }
-  useEffect(() => {
-    isTrue()
-  }, [album, paramResponse])
-
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
                 <Card containerStyle={{padding: 0, marginTop: 40}} >
                   <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
+                     <View>  
+                       <Icon
+                        style={{top: 20, left: 320}}
+                          name="arrow-left-circle"
+                          size={40}
+                          color="white"
+                          onPress={() => navigation.goBack()}
+                       />  
+                      </View>
                   </View>
-                  {visible == true?
-                    album.map((item) => (
+                  {
+                    album.map((item) =>(
                       <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
                           <Text style={{fontSize: 14}}>Nome: <ListItem.Title style={{fontSize: 14}}>{item.nome}</ListItem.Title></Text>
@@ -101,9 +93,8 @@ export default function Identificação({route, navigation}) {
                         </ListItem.Content>
                       </ListItem>
                     )) 
-                    : <Text>Não há dados</Text>
+                    
                   }
-                  <Text>{JSON.stringify(paramResponse)}</Text>
                 </Card>
               
              </ScrollView>
