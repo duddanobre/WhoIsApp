@@ -19,7 +19,6 @@ const base_instance_options = {
 
 export default function Recognize({ navigation }){
 let camera;  
-const [response, setResponse] = useState([]);
   async function takePicture(){
        // camera.capture()
             if (camera) {
@@ -56,9 +55,9 @@ const [response, setResponse] = useState([]);
                       );
                       
                       if (findsimilars_res.data.length) {
-                        console.log("Response: ", findsimilars_res.data, response);
-                        setResponse(findsimilars_res.data);
-                        // if(findsimilars_res.data[0].confidence >= 0.6)
+                        console.log("Response: ", findsimilars_res.data);
+                        const response = findsimilars_res.data;
+                        console.log("Response: ", response);
                         navigation.navigate("Idenfiticação", {paramResponse: response})
             
                       }else {
