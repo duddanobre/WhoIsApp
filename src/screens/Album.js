@@ -9,6 +9,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import FormButton from '../components/FormButton';
 import axios from 'axios';
 import storage from '@react-native-firebase/storage';
+import Icon from 'react-native-vector-icons/Feather';
 
 const locate = 'southcentralus.api.cognitive.microsoft.com';
 const key = '4babdbede4bc4fb59ce92d5b9f2fe1ae';
@@ -96,7 +97,8 @@ export default function Identificação({navigation}) {
 
   const addFace = async () => {
     const faceId = await faceAddAPI();
-  
+    const imageUrl = await uploadImage();
+
     firestore()
         .collection('album')
         .add({
@@ -104,7 +106,8 @@ export default function Identificação({navigation}) {
           nome: nome,
           aniversario: aniversario,
           persistedFaceId: faceId,
-          parentesco: parentesco
+          parentesco: parentesco,
+          face: imageUrl
         })
         .then(() => {
           console.log('People added', persistedFaceId, faceId);
@@ -184,7 +187,17 @@ export default function Identificação({navigation}) {
     return (
       <ScrollView contentContainerStyle={styles.containerStyle}>
                 <Card containerStyle={{padding: 35, marginTop: 40, marginBottom: 30}}>
-                  <View style={{backgroundColor: '#7b1fa2', height: 80}}>  
+                <View style={{
+                     backgroundColor: '#7b1fa2', height: 80}}>  
+                     <View>  
+                       <Icon
+                        style={{top: 20, left: 10}}
+                          name="arrow-left-circle"
+                          size={30}
+                          color="white"
+                          onPress={() => navigation.goBack()}
+                       />  
+                      </View>
                   </View>
                   <View>
                 { image == null ? (
