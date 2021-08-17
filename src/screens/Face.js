@@ -13,7 +13,7 @@ export default function Identificação({route, navigation}) {
   const [album, setAlbum] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState('');
-  const r = Object.values(paramResponse)
+  const r = Object.values(paramResponse);
   const x = r.map(i => i.persistedFaceId);
 
     firebase.auth().onAuthStateChanged((user) => {
