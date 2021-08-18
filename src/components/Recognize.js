@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather'
 import { RNCamera } from 'react-native-camera';
