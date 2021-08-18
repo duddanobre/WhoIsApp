@@ -44,7 +44,7 @@ const Router = () => {
                />
                <AppDrawer.Screen name = "Album" component={Album}
                  options={{swipeEnabled: false}} />
-               <AppDrawer.Screen name = "Idenfiticação" component={Face}
+               <AppDrawer.Screen name = "Identificação" component={Face}
                  options={{swipeEnabled: false}} />
                 <AppDrawer.Screen name = "SingUp" component={SingUp}
                  options={{swipeEnabled: false, headerShown: false}} />

@@ -58,7 +58,7 @@ let camera;
                         console.log("Response: ", findsimilars_res.data);
                         const response = findsimilars_res.data;
                         console.log("Response: ", response);
-                        navigation.navigate("Idenfiticação", {paramResponse: response})
+                        navigation.navigate("Identificação", {paramResponse: response})
             
                       }else {
                         alert("No match found");

@@ -83,7 +83,7 @@ export default function Identificação({route, navigation}) {
                       </View>
                   </View>
                   {
-                    album.map((item) =>(
+                    album.map((item) => item.face != null ? (
                       <ListItem key={item.id} bottomDivider>
                         <ListItem.Content>
                           <Avatar 
@@ -97,7 +97,7 @@ export default function Identificação({route, navigation}) {
                           </Text>
                         </ListItem.Content>
                       </ListItem>
-                    )) 
+                    ): <Text>Não encontramos ninguém :( Tente novamente!</Text>) 
                     
                     }
                 </Card>
