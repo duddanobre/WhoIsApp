@@ -48,10 +48,7 @@ async function onFacebookButtonPress() {
                 onPress={() => onFacebookButtonPress()}
             >
                 <View style={styles.iconWrapper}>
-                    <FontAwesome name="facebook-official" style={styles.icon} size={30} color="#4867aa" />
-                </View>
-                <View style={styles.btnTxtWrapper}>
-                    <Text style={styles.buttonText}> Fazer login com Facebook </Text>
+                    <FontAwesome name="facebook-official" style={styles.icon} size={50} color="#2461e0" />
                 </View>
             </TouchableOpacity>
         );
@@ -60,33 +57,16 @@ async function onFacebookButtonPress() {
 const styles = StyleSheet.create({
     buttonContainer: {
       marginHorizontal: 15,
-      width: '100%',
       height: windowHeight / 15,
-      padding: 10,
-      flexDirection: 'row',
-      borderRadius: 4,
     },
     iconWrapper: {
-      width: 30,
+      width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-      
+     // backgroundColor: '#2759c2'
     },
     icon: {
       fontWeight: 'bold',
       top: 15,
-      left: 5
-    },
-    btnTxtWrapper: {
-      justifyContent: 'center',
-      alignItems: 'center',
-
-    },
-    buttonText: {
-      fontSize: 14,
-      fontWeight: 'bold',
-      fontFamily: 'Lato-Regular',
-      top: 15,
-      left: 25
     },
   });
