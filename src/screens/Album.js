@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState} from 'react';
 import { Text, TouchableOpacity, Alert } from 'react-native';
 import {StyleSheet, ScrollView, View} from 'react-native';
 import { Card, Avatar } from 'react-native-elements';
@@ -10,6 +10,7 @@ import FormButton from '../components/FormButton';
 import axios from 'axios';
 import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/Feather';
+import LottieView from 'lottie-react-native';
 
 const locate = 'southcentralus.api.cognitive.microsoft.com';
 const key = '4babdbede4bc4fb59ce92d5b9f2fe1ae';
@@ -26,8 +27,7 @@ const base_instance_options = {
 export default function Identificação({navigation}) {
 
   const [image, setImage] = useState(null);
-  const [album, setAlbum] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [userId, setUserId] = useState('');
   const [aniversario, setAniversario] = useState('');
   const [nome, setNome] = useState('');
@@ -42,49 +42,6 @@ export default function Identificação({navigation}) {
       }
     });
 
-  const fetchAlbum = async () => {
-    try {
-      const list = [];
-  
-      await firestore()
-        .collection('album')
-        .where('userItem', '==', userId)
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const {
-              userItem,
-              nome,
-              aniversario,
-              persistedFaceId,
-              parentesco
-            } = doc.data();
-            list.push({
-              id: doc.id,
-              userItem,
-              nome,
-              aniversario,
-              persistedFaceId,
-              parentesco
-            });
-          });
-        });
-  
-      setAlbum(list);
-       
-      if(loading){
-        setLoading(false);
-      }
-  
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  
-  useEffect(() => {
-    fetchAlbum(album);
-  }, [album]);
-
   const choosePhotoFromLibrary = () => {
     ImagePicker.openPicker({
       cropping: true,
@@ -96,9 +53,9 @@ export default function Identificação({navigation}) {
   };
 
   const addFace = async () => {
+    setLoading(true);
     const faceId = await faceAddAPI();
     const imageUrl = await uploadImage();
-
     firestore()
         .collection('album')
         .add({
@@ -111,8 +68,9 @@ export default function Identificação({navigation}) {
         })
         .then(() => {
           console.log('People added', persistedFaceId, faceId);
-          Alert.alert('Pessoa cadastrada com sucesso!');
+          setLoading(false);
           setNome(''), setParentesco(''), setAniversario(''), setImage(null);
+          Alert.alert('Pessoa cadastrada com sucesso!')
         })
         .catch((error) => {
           Alert.alert('Um erro ocorreu, verifique os dados e tente novamente!', error);
@@ -177,7 +135,6 @@ export default function Identificação({navigation}) {
         {url: imageUrl}
       );
       console.log("face added:", addFaces_res.data.persistedFaceId);
-      //setPersistedFaceId(addFaces_res.data.persistedFaceId);
       return addFaces_res.data.persistedFaceId;
     } catch (error) {
       console.log(error)
@@ -185,9 +142,12 @@ export default function Identificação({navigation}) {
   }
 
     return (
+    loading? (
+        <LottieView source={require('../assets/loading2.json')} autoPlay loop />
+      ) : (
       <ScrollView contentContainerStyle={styles.containerStyle}>
                 <Card containerStyle={{padding: 35, marginTop: 40, marginBottom: 30}}>
-                <View style={{
+                  <View style={{
                      backgroundColor: '#7b1fa2', height: 80}}>  
                      <View>  
                        <Icon
@@ -199,7 +159,7 @@ export default function Identificação({navigation}) {
                        />  
                       </View>
                   </View>
-                  <View>
+              <View> 
                 { image == null ? (
                   <Avatar  
                   icon={{ name: 'image', color:'#a2a0a3', size: 60 }} 
@@ -245,10 +205,10 @@ export default function Identificação({navigation}) {
                       buttonTitle="Cadastrar pessoa"
                       onPress={() => {addFace()}}
                      />
-                  </View>
-                </Card>
-              
+                </View>
+              </Card>
              </ScrollView>
+      )
     )
   
 }
