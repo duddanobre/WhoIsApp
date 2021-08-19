@@ -36,8 +36,8 @@ GoogleSignin.configure({
 
 return(
     <GoogleSigninButton
-              style={{ width: 300 , height: 60, top: 15}}
-              size={GoogleSigninButton.Size.Wide}
+              style={{ width: 60 , height: 60, top: 9}}
+              size={GoogleSigninButton.Size.Icon}
               color={GoogleSigninButton.Color.Light}
               onPress={() => onGoogleButtonPress()}
     />

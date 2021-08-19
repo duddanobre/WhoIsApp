@@ -5,6 +5,7 @@ import FormInput from '../components/FormInput';
 import auth from '@react-native-firebase/auth';
 import FacebookButton from '../components/FacebookButton';
 import GoogleButton from '../components/GoogleButton';
+import { windowHeight } from '../components/dimentions/Dimentions';
 
 export default function Login({navigation}) { 
 
@@ -35,7 +36,7 @@ export default function Login({navigation}) {
 
   return (
 
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       
       <Text style={styles.text}>Who Is</Text>
 
@@ -67,7 +68,7 @@ export default function Login({navigation}) {
       </TouchableOpacity>
 
       {Platform.OS === 'android' ? (
-        <View>
+        <View style={{flexDirection: 'row', marginRight: 40, padding: 10}}>
              <FacebookButton />
              <GoogleButton />
         </View>
@@ -81,7 +82,7 @@ export default function Login({navigation}) {
           Ainda não é cadastrado? Clique aqui
         </Text>
       </TouchableOpacity>
-    </ScrollView>
+    </View>
      
     );
   
@@ -89,20 +90,21 @@ export default function Login({navigation}) {
 
   const styles = StyleSheet.create({
     container: {
-      
+      backgroundColor: '#ffffff',
       flexDirection: 'column',
       justifyContent: 'center', 
       alignItems: 'center',  
       alignContent: 'space-between',
-      paddingHorizontal: 40                                  
+      paddingHorizontal: 40,
+      height: windowHeight/ 1
     },
-    text: {
+      text: {
       fontFamily: 'Lato-Regular',
       fontWeight: 'bold',
       fontSize: 28,
-      color: '#78909c',
+      color: '#473299',
       bottom: 10,
-      top: 30
+      
     },
     navButton: {
       marginTop: 15,  
