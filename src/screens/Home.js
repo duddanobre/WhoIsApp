@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect } from 'react';
 import {Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert, LogBox} from 'react-native';
 import { Card, ListItem, Overlay} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -293,7 +293,7 @@ useEffect(() => {
             <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}}>
               <RecognizeIcon name="face-recognition" style={styles.actionButtonIcon} />
             </ActionButton.Item>
-        </ActionButton>
+          </ActionButton>
       </ScrollView>
 
 
