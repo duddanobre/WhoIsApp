@@ -51,6 +51,7 @@ const fetchAgenda = async () => {
       .collection('agenda')
       .where('userItem', '==', userId)
       .orderBy('data', 'desc')
+      .limit(5)
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
