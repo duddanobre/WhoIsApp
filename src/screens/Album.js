@@ -142,7 +142,7 @@ export default function Identificação({navigation}) {
   }
 
     return (
-    loading? (
+    loading && uploading ? (
         <LottieView source={require('../assets/loading2.json')} autoPlay loop />
       ) : (
       <ScrollView contentContainerStyle={styles.containerStyle}>
@@ -153,6 +153,15 @@ export default function Identificação({navigation}) {
                        <Icon
                         style={{top: 20, left: 10}}
                           name="arrow-left-circle"
+                          size={30}
+                          color="white"
+                          onPress={() => navigation.goBack()}
+                       />  
+                      </View>
+                      <View>  
+                       <Icon
+                        style={{top: 20, right: 10}}
+                          name="play"
                           size={30}
                           color="white"
                           onPress={() => navigation.goBack()}
