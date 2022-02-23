@@ -156,94 +156,52 @@ useEffect(() => {
 }, []);
  
     return (
-      <ScrollView contentContainerStyle={styles.containerStyle}>
-          <LinearGradient colors={['#4a0072', '#7b1fa2']}
-           style={styles.welcome}> 
+    <ScrollView contentContainerStyle={styles.containerStyle}>
+        <LinearGradient colors={['#4a0072', '#7b1fa2']}
+                        style={styles.welcome}> 
           <Text style={styles.welcomeText}>
             <Icon name="user" size={20} color="#fff" />
               Olá {getCurrentUser()}
           </Text>
           <Text style={styles.dataText}>
             <Icon name="calendar" size={20} color="#fff" />
-             {getCurrentDate()} 
+            {getCurrentDate()} 
           </Text>
-          </LinearGradient>
-                <Card containerStyle={{padding: 0, marginTop: 40}} >
-                  <View style={{
-                     backgroundColor: '#7b1fa2', height: 80}}
-                  >  
-                     <View>  
-                       <Icon
-                        style={{top: 20, left: 320}}
-                          name="plus-circle"
-                          size={40}
-                          color="white"
-                          onPress={() => setVisible(!visible)}
-                       />  
-                      </View>
-                  </View>
-                  { 
-                    agenda.map((item) => (
-                      <ListItem key={item.id} bottomDivider>
-                        <ListItem.Content>
-                          <ListItem.Title style={{fontWeight: 'bold'}}>{item.atividade}</ListItem.Title>
-                          <ListItem.Title>{item.data}</ListItem.Title>
-                          <ListItem.Title>{item.hora}</ListItem.Title>
-                        </ListItem.Content>
-                        <Icon name="edit" size={24} onPress={() => {
-                          setVisibleE(!visibleE), setId(item.id), setAtividade(item.atividade), setHora(item.hora), setData(item.data)}}/>
-                        <Icon name="trash" size={24} onPress={() => {setId(item.id), setAtividade(item.atividade), deleteAgenda()}} />
-                      </ListItem>
-                    )) 
-                  }
-                </Card>
-              <View>
-                  <Overlay isVisible={visible} overlayStyle={{padding: 40, width: 350, height: 450}}>
-                    <Text style={styles.agendaText}> Cadastrar atividade </Text>
-                    <FormInput
-                      labelValue={atividade}
-                      onChangeText={(agendaItem) => setAtividade(agendaItem)}
-                      placeholderText="Nome da atividade"
-                      icon="rest"
-                      keyboardType="default"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <FormInput
-                      labelValue={hora}
-                      onChangeText={(agendaHora) => setHora(agendaHora)}
-                      placeholderText="Hora da atividade"
-                      icon="clockcircleo"
-                      keyboardType="default"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-                    <FormInput
-                      labelValue={data}
-                      onChangeText={(agendaData) => setData(agendaData)}
-                      placeholderText="Data da atividade"
-                      icon="calendar"
-                      keyboardType="default"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                    />
-
-                      <FormButton
-                          buttonTitle="Adicionar"
-                          onPress={() => 
-                            {addAgenda(), setVisible(!visible)
-                             }}
-                      />
-                       <TouchableOpacity style={styles.buttonModal} onPress={() => setVisible(!visible)}>
-                         <Text style={styles.buttonModalText}> Cancelar </Text>
-                       </TouchableOpacity>
-
-                  </Overlay>
-              </View>
-                
+        </LinearGradient>
+        <View style={{bottom: 25}}>
+          <Card containerStyle={{padding: 0, marginTop: 40}}>
+            <View style={{
+                backgroundColor: '#7b1fa2', height: 80}}
+            >  
+            <View>  
+              <Icon
+                    style={{top: 20, left: 320}}
+                      name="plus-circle"
+                      size={40}
+                      color="white"
+                      onPress={() => setVisible(!visible)}
+              />  
+            </View>
+            </View>
+            { 
+              agenda.map((item) => (
+                <ListItem key={item.id} bottomDivider>
+                  <ListItem.Content>
+                    <ListItem.Title style={{fontWeight: 'bold'}}>{item.atividade}</ListItem.Title>
+                    <ListItem.Title>{item.data}</ListItem.Title>
+                    <ListItem.Title>{item.hora}</ListItem.Title>
+                  </ListItem.Content>
+                  <Icon name="edit" size={24} onPress={() => {
+                    setVisibleE(!visibleE), setId(item.id), setAtividade(item.atividade), setHora(item.hora), setData(item.data)}}/>
+                  <Icon name="trash" size={24} onPress={() => {setId(item.id), setAtividade(item.atividade), deleteAgenda()}} />
+                </ListItem>
+              )) 
+            }
+          </Card>
+        </View>
         <View>
-            <Overlay isVisible={visibleE} overlayStyle={{padding: 40, width: 350, height: 450}}>
-            <Text style={styles.agendaText}> Editar atividade </Text>
+          <Overlay isVisible={visible} overlayStyle={{padding: 40, width: 350, height: 450}}>
+            <Text style={styles.agendaText}> Cadastrar atividade </Text>
             <FormInput
               labelValue={atividade}
               onChangeText={(agendaItem) => setAtividade(agendaItem)}
@@ -272,30 +230,75 @@ useEffect(() => {
               autoCorrect={false}
             />
 
+            <FormButton
+                buttonTitle="Adicionar"
+                onPress={() => 
+                  {addAgenda(), setVisible(!visible)
+                    }}
+            />
+            <TouchableOpacity style={styles.buttonModal} onPress={() => setVisible(!visible)}>
+              <Text style={styles.buttonModalText}> Cancelar </Text>
+            </TouchableOpacity>
+
+          </Overlay>
+        </View>
+                
+          <View>
+            <Overlay isVisible={visibleE} overlayStyle={{padding: 40, width: 350, height: 450}}>
+              <Text style={styles.agendaText}> Editar atividade </Text>
+              <FormInput
+                labelValue={atividade}
+                onChangeText={(agendaItem) => setAtividade(agendaItem)}
+                placeholderText="Nome da atividade"
+                icon="rest"
+                keyboardType="default"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <FormInput
+                labelValue={hora}
+                onChangeText={(agendaHora) => setHora(agendaHora)}
+                placeholderText="Hora da atividade"
+                icon="clockcircleo"
+                keyboardType="default"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <FormInput
+                labelValue={data}
+                onChangeText={(agendaData) => setData(agendaData)}
+                placeholderText="Data da atividade"
+                icon="calendar"
+                keyboardType="default"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+
               <FormButton
                   buttonTitle="Editar"
                   onPress={() => 
                     {setVisibleE(!visibleE), editarAgenda();
                   }}
               />
-              <TouchableOpacity style={styles.buttonModal} onPress={() => setVisibleE(!visibleE)}>
-                <Text style={styles.buttonModalText}> Cancelar </Text>
-              </TouchableOpacity>
-
-          </Overlay>
-    </View>    
-        
-          <View style={styles.buttonRecognize}>
+                <TouchableOpacity style={styles.buttonModal} onPress={() => setVisibleE(!visibleE)}>
+                  <Text style={styles.buttonModalText}> Cancelar </Text>
+                </TouchableOpacity>
+            </Overlay>
+          </View>    
+            
+          <View style={styles.recognize}>
+            
           </View>
-          <ActionButton buttonColor="#ae52d4">
-            <ActionButton.Item buttonColor='#ffd500' title="Album" onPress={() => {navigation.navigate("Album")}}>
-              <Icone name="image" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-            <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}}>
-              <RecognizeIcon name="face-recognition" style={styles.actionButtonIcon} />
-            </ActionButton.Item>
-          </ActionButton>
-      </ScrollView>
+          <ActionButton buttonColor="#ae52d4" spacing={7} size={50}>
+                <ActionButton.Item buttonColor='#ffd500' title="Album" onPress={() => {navigation.navigate("Album")}} size={40}>
+                    <Icone name="image" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+                <ActionButton.Item buttonColor='#9c52d4' title="Reconhecer" onPress={() => {navigation.navigate("Reconhecimento")}} size={40}>
+                    <RecognizeIcon name="face-recognition" style={styles.actionButtonIcon} />
+                </ActionButton.Item>
+            </ActionButton>
+          
+    </ScrollView>
 
 
     )
@@ -329,28 +332,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: '100%',
     height: windowHeight / 20,
-    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
   },
   buttonModalText:{
     fontSize: 16,
-    fontFamily: 'Lato-Regular',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Lato-Regular'
   },
-  buttonRecognize:{
+  recognize: {
+    height: windowHeight / 10,
+    top: 100, 
+    marginBottom: 90,
     left: 150,
-    bottom: 10,
-    marginTop: 280,
-    height: windowHeight / 15,
-},
-recognize: {
-  top: 10
-},
-actionButtonIcon:{
-  fontSize: 20,
-  height: 22,
-  color: 'white',
-}
+    
+  },
+  actionButtonIcon:{
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  }
 });

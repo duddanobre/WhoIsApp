@@ -38,7 +38,7 @@ export default function Login({navigation}) {
 
     <View style={styles.container}>
       
-      <Text style={styles.text}>Who Is</Text>
+      <Text style={styles.text}>WhoIs</Text>
 
       <FormInput
         labelValue={email}
