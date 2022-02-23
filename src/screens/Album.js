@@ -158,15 +158,6 @@ export default function Identificação({navigation}) {
                           onPress={() => navigation.goBack()}
                        />  
                       </View>
-                      <View>  
-                       <Icon
-                        style={{top: 20, right: 10}}
-                          name="play"
-                          size={30}
-                          color="white"
-                          onPress={() => navigation.goBack()}
-                       />  
-                      </View>
                   </View>
               <View> 
                 { image == null ? (

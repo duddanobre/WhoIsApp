@@ -9,7 +9,7 @@ import ResetPassword from './screens/ResetPassword';
 import Logout from './components/Logout';
 import Recognize from './components/Recognize';
 import Album from './screens/Album';
-import {BackHandler, Alert} from 'react-native';
+import {BackHandler} from 'react-native';
 
 const AppDrawer = createDrawerNavigator();
 
@@ -29,11 +29,11 @@ const Router = () => {
     return (
         <NavigationContainer>
             <AppDrawer.Navigator initialRouteName="Login"
-             screenOptions={{ headerShown: true, headerTintColor: "#fff",
-              headerStyle:{backgroundColor: "#4a0072", height: 80},
+             screenOptions={{ headerShown: true, headerTintColor: "#fff", headerLeft: () => null,
+              headerStyle:{backgroundColor: "#4a0072", height: 80}
              }}>
-                <AppDrawer.Screen name="Login" component={Login} 
-                options={{swipeEnabled: false, headerShown: false}}/>
+               <AppDrawer.Screen name="Login" component={Login} 
+                options={{headerShown: false}}/>
                 <AppDrawer.Screen name = "Home" component={Home}
                     options={{
                         title: 'Who Is',
