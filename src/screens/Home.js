@@ -305,7 +305,6 @@ useEffect(() => {
   
 }
 
-
 const styles = StyleSheet.create({
   welcomeText:{
    bottom:15,

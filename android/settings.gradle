@@ -1,7 +1,10 @@
 rootProject.name = 'whois'
 include ':react-native-camera'
 project(':react-native-camera').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-camera/android')
+<<<<<<< HEAD
 include ':react-native-splash-screen' 
 project(':react-native-splash-screen').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-splash-screen/android')
+=======
+>>>>>>> 2ac8fcdda71023f1842cd460276c3a6d4edc6832
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
