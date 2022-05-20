@@ -1,7 +1,7 @@
 package com.whois;
 
 import com.facebook.react.ReactActivity;
-import com.cboy.rn.splashscreen.SplashScreen;
+//import com.cboy.rn.splashscreen.SplashScreen;
 import android.os.Bundle; 
 
 public class MainActivity extends ReactActivity {
@@ -15,9 +15,9 @@ public class MainActivity extends ReactActivity {
     return "whois";
   }
 
-  @Override
+ /*  @Override
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.show(this);
         super.onCreate(savedInstanceState);
-    }
+    } */
 }
