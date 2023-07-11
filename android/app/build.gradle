@@ -185,7 +185,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-splash-screen')
+    
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation platform('com.google.firebase:firebase-bom:27.0.0')
     
